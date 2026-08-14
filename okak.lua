@@ -9,24 +9,30 @@ local LocalPlayer = Players.LocalPlayer
 -- СИСТЕМА ДОСТУПА (WHITELIST)
 -- ==========================================
 local allowedUsers = {
-    "TONA_TT228",     -- ←←← ЗАМЕНИ ЭТО НА СВОЙ НИК
-    "pasha46211"
+    "TONA_TT228",      -- твой ник
+    "pasha46211",      -- ник Паши (можешь добавить ещё)
 }
 
-local hasAccess = false
-local myNameLower = string.lower(LocalPlayer.Name)
-
-for _, username in ipairs(allowedUsers) do
-    if string.lower(username) == myNameLower then
-        hasAccess = true
-        break
+local function isAllowed(player)
+    local nameLower = string.lower(player.Name)
+    local displayLower = string.lower(player.DisplayName)
+    
+    for _, allowed in ipairs(allowedUsers) do
+        local allowedLower = string.lower(allowed)
+        if allowedLower == nameLower or allowedLower == displayLower then
+            return true
+        end
     end
+    return false
 end
 
-if not hasAccess then
-    -- Показываем, какой ник реально у тебя (чтобы было видно в чём ошибка)
-    warn("Твой ник в игре: " .. LocalPlayer.Name)
-    warn("Он не найден в списке allowedUsers")
+if not isAllowed(LocalPlayer) then
+    warn("========================================")
+    warn("ДОСТУП ЗАКРЫТ")
+    warn("Username: " .. LocalPlayer.Name)
+    warn("DisplayName: " .. LocalPlayer.DisplayName)
+    warn("Ни один из них не найден в allowedUsers")
+    warn("========================================")
 
     if CoreGui:FindFirstChild("MM2NoAccess") then
         CoreGui.MM2NoAccess:Destroy()
@@ -53,32 +59,33 @@ if not hasAccess then
 
     local title = Instance.new("TextLabel")
     title.Size = UDim2.new(1, 0, 0, 80)
-    title.Position = UDim2.new(0, 0, 0.4, -40)
+    title.Position = UDim2.new(0, 0, 0.38, -40)
     title.BackgroundTransparency = 1
     title.Text = "❄ ДОСТУП ЗАКРЫТ ❄"
     title.TextColor3 = Color3.fromRGB(200, 240, 255)
     title.Font = Enum.Font.GothamBlack
-    title.TextSize = 45
+    title.TextSize = 42
     title.Parent = bg
 
     local sub = Instance.new("TextLabel")
-    sub.Size = UDim2.new(1, 0, 0, 40)
-    sub.Position = UDim2.new(0, 0, 0.4, 40)
+    sub.Size = UDim2.new(1, -40, 0, 60)
+    sub.Position = UDim2.new(0, 20, 0.38, 40)
     sub.BackgroundTransparency = 1
-    sub.Text = "Твой аккаунт ("..LocalPlayer.Name..") не найден в базе."
+    sub.Text = "Username: " .. LocalPlayer.Name .. "\nDisplayName: " .. LocalPlayer.DisplayName
     sub.TextColor3 = Color3.fromRGB(150, 200, 230)
     sub.Font = Enum.Font.GothamBold
-    sub.TextSize = 20
+    sub.TextSize = 18
+    sub.TextWrapped = true
     sub.Parent = bg
 
     task.spawn(function()
-        while task.wait(0.1) do
+        while task.wait(0.12) do
             local flake = Instance.new("TextLabel")
             flake.Text = "❄"
             flake.TextColor3 = Color3.fromRGB(255, 255, 255)
             flake.TextTransparency = math.random(30, 80) / 100
             flake.BackgroundTransparency = 1
-            local size = math.random(15, 30)
+            local size = math.random(14, 28)
             flake.TextSize = size
             flake.Size = UDim2.new(0, size, 0, size)
             flake.Position = UDim2.new(math.random(), 0, -0.1, 0)
@@ -90,7 +97,9 @@ if not hasAccess then
                 Rotation = math.random(-360, 360)
             })
             tween:Play()
-            tween.Completed:Connect(function() flake:Destroy() end)
+            tween.Completed:Connect(function()
+                flake:Destroy()
+            end)
         end
     end)
 
@@ -101,7 +110,7 @@ end
 pcall(function()
     game:GetService("StarterGui"):SetCore("SendNotification", {
         Title = "✅ Доступ разрешен",
-        Text = "Добро пожаловать, " .. LocalPlayer.Name .. "!",
+        Text = "Добро пожаловать, " .. LocalPlayer.DisplayName .. "!",
         Duration = 3
     })
 end)
@@ -111,88 +120,88 @@ end)
 -- ==========================================
 local mm2Values = {
     -- Tier 4
-    ["Traveler's Gun"] = 5600, ["Evergun"] = 3450, ["Constellation"] = 2700, 
-    ["Evergreen"] = 2500, ["Turkey"] = 2450, ["Vampire's Gun"] = 1950, 
-    ["Alienbeam"] = 1925, ["Darkshot"] = 1775, ["Darksword"] = 1750, 
-    ["Raygun"] = 1700, ["Blossom"] = 1360, ["Sakura"] = 1350, 
-    ["Sunrise"] = 1125, ["Snowcannon"] = 850, ["Bauble"] = 825, 
-    ["Sunset"] = 625, ["Soul"] = 615, ["Spirit"] = 605, 
-    ["Rainbow Gun"] = 420, ["Flora"] = 410, ["Rainbow"] = 410, 
+    ["Traveler's Gun"] = 5600, ["Evergun"] = 3450, ["Constellation"] = 2700,
+    ["Evergreen"] = 2500, ["Turkey"] = 2450, ["Vampire's Gun"] = 1950,
+    ["Alienbeam"] = 1925, ["Darkshot"] = 1775, ["Darksword"] = 1750,
+    ["Raygun"] = 1700, ["Blossom"] = 1360, ["Sakura"] = 1350,
+    ["Sunrise"] = 1125, ["Snowcannon"] = 850, ["Bauble"] = 825,
+    ["Sunset"] = 625, ["Soul"] = 615, ["Spirit"] = 605,
+    ["Rainbow Gun"] = 420, ["Flora"] = 410, ["Rainbow"] = 410,
     ["Bloom"] = 400,
     -- Tier 3
-    ["Heart Wand"] = 340, ["Ocean"] = 285, ["Waves"] = 280, 
-    ["Xenoknife"] = 280, ["Xenoshot"] = 280, ["Flowerwood Gun"] = 265, 
-    ["Blizzard"] = 260, ["Flowerwood"] = 260, ["Snowstorm"] = 260, 
-    ["Snow Dagger"] = 250, ["Watergun"] = 250, ["Icecream"] = 160, 
-    ["Treat"] = 155, ["Beachy"] = 150, ["Sands"] = 150, 
-    ["Sweet"] = 150, ["Borealis"] = 145, ["Australis"] = 140, 
-    ["Bat"] = 120, ["Pearlshine"] = 85, ["Pearl"] = 80, 
+    ["Heart Wand"] = 340, ["Ocean"] = 285, ["Waves"] = 280,
+    ["Xenoknife"] = 280, ["Xenoshot"] = 280, ["Flowerwood Gun"] = 265,
+    ["Blizzard"] = 260, ["Flowerwood"] = 260, ["Snowstorm"] = 260,
+    ["Snow Dagger"] = 250, ["Watergun"] = 250, ["Icecream"] = 160,
+    ["Treat"] = 155, ["Beachy"] = 150, ["Sands"] = 150,
+    ["Sweet"] = 150, ["Borealis"] = 145, ["Australis"] = 140,
+    ["Bat"] = 120, ["Pearlshine"] = 85, ["Pearl"] = 80,
     ["Candy"] = 80, ["Heartblade"] = 65,
     -- Tier 2
-    ["Luger"] = 40, ["Red Luger"] = 37, ["Phantom"] = 35, 
-    ["Spectre"] = 35, ["Candleflame"] = 33, ["Darkbringer"] = 33, 
-    ["Elderwood Blade"] = 33, ["Elderwood Revolver"] = 33, 
-    ["Iceblaster"] = 33, ["Lightbringer"] = 33, ["Makeshift"] = 33, 
-    ["Sugar"] = 32, ["Ornament"] = 32, ["Green Luger"] = 23, 
-    ["Amerilaser"] = 22, ["Laser"] = 22, ["Hallowgun"] = 20, 
+    ["Luger"] = 40, ["Red Luger"] = 37, ["Phantom"] = 35,
+    ["Spectre"] = 35, ["Candleflame"] = 33, ["Darkbringer"] = 33,
+    ["Elderwood Blade"] = 33, ["Elderwood Revolver"] = 33,
+    ["Iceblaster"] = 33, ["Lightbringer"] = 33, ["Makeshift"] = 33,
+    ["Sugar"] = 32, ["Ornament"] = 32, ["Green Luger"] = 23,
+    ["Amerilaser"] = 22, ["Laser"] = 22, ["Hallowgun"] = 20,
     ["Nightblade"] = 20, ["Shark"] = 20,
     -- Tier 1
-    ["Icebeam"] = 18, ["Plasmabeam"] = 18, ["Swirly Gun"] = 18, 
-    ["Battleaxe II"] = 17, ["Blaster"] = 17, ["Ginger Luger"] = 17, 
-    ["Pixel"] = 17, ["Gemstone"] = 15, ["Iceflake"] = 15, 
-    ["Old Glory"] = 15, ["Plasmablade"] = 15, ["Slasher"] = 15, 
-    ["Vampire's Edge"] = 15, ["Cookiecane"] = 13, ["Deathshard"] = 13, 
-    ["Eternalcane"] = 13, ["Gingerblade"] = 13, ["Jinglegun"] = 13, 
-    ["Lugercane"] = 13, ["Minty"] = 13, ["Nebula"] = 13, 
-    ["Virtual"] = 13, ["Battleaxe"] = 12, ["Gingermint"] = 12, 
-    ["Swirly Blade"] = 12, ["Chill"] = 10, ["Clockwork"] = 10, 
-    ["Fang"] = 10, ["Frostsaber"] = 10, ["Heat"] = 10, 
+    ["Icebeam"] = 18, ["Plasmabeam"] = 18, ["Swirly Gun"] = 18,
+    ["Battleaxe II"] = 17, ["Blaster"] = 17, ["Ginger Luger"] = 17,
+    ["Pixel"] = 17, ["Gemstone"] = 15, ["Iceflake"] = 15,
+    ["Old Glory"] = 15, ["Plasmablade"] = 15, ["Slasher"] = 15,
+    ["Vampire's Edge"] = 15, ["Cookiecane"] = 13, ["Deathshard"] = 13,
+    ["Eternalcane"] = 13, ["Gingerblade"] = 13, ["Jinglegun"] = 13,
+    ["Lugercane"] = 13, ["Minty"] = 13, ["Nebula"] = 13,
+    ["Virtual"] = 13, ["Battleaxe"] = 12, ["Gingermint"] = 12,
+    ["Swirly Blade"] = 12, ["Chill"] = 10, ["Clockwork"] = 10,
+    ["Fang"] = 10, ["Frostsaber"] = 10, ["Heat"] = 10,
     ["Spider"] = 10, ["Tides"] = 10,
     -- Tier 0
-    ["Bioblade"] = 8, ["Eternal III"] = 8, ["Eternal IV"] = 8, 
-    ["Hallow's Blade"] = 8, ["Hallow's Edge"] = 8, ["Handsaw"] = 8, 
-    ["Boneblade"] = 7, ["Eternal"] = 7, ["Eternal II"] = 7, 
-    ["Frostbite"] = 7, ["Ghostblade"] = 7, ["Ice Dragon"] = 7, 
-    ["Ice Shard"] = 7, ["Prismatic"] = 7, ["Pumpking"] = 7, 
-    ["Saw"] = 7, ["Xmas"] = 7, ["Eggblade"] = 5, ["Flames"] = 5, 
-    ["Snowflake"] = 5, ["Winter's Edge"] = 5, ["Peppermint"] = 4, 
-    ["Cookieblade"] = 3, ["Blue Seer"] = 3, ["Purple Seer"] = 3, 
-    ["Red Seer"] = 3, ["Seer"] = 3, ["Orange Seer"] = 2, 
+    ["Bioblade"] = 8, ["Eternal III"] = 8, ["Eternal IV"] = 8,
+    ["Hallow's Blade"] = 8, ["Hallow's Edge"] = 8, ["Handsaw"] = 8,
+    ["Boneblade"] = 7, ["Eternal"] = 7, ["Eternal II"] = 7,
+    ["Frostbite"] = 7, ["Ghostblade"] = 7, ["Ice Dragon"] = 7,
+    ["Ice Shard"] = 7, ["Prismatic"] = 7, ["Pumpking"] = 7,
+    ["Saw"] = 7, ["Xmas"] = 7, ["Eggblade"] = 5, ["Flames"] = 5,
+    ["Snowflake"] = 5, ["Winter's Edge"] = 5, ["Peppermint"] = 4,
+    ["Cookieblade"] = 3, ["Blue Seer"] = 3, ["Purple Seer"] = 3,
+    ["Red Seer"] = 3, ["Seer"] = 3, ["Orange Seer"] = 2,
     ["Yellow Seer"] = 2,
     -- Tier 3 (Chroma)
-    ["C. Traveler's Gun"] = 220000, ["Chroma Evergun"] = 75000, 
-    ["Chroma Evergreen"] = 48000, ["Chroma Bauble"] = 34000, 
-    ["C. Vampire's Gun"] = 29000, ["C. Constellation"] = 27000, 
+    ["C. Traveler's Gun"] = 220000, ["Chroma Evergun"] = 75000,
+    ["Chroma Evergreen"] = 48000, ["Chroma Bauble"] = 34000,
+    ["C. Vampire's Gun"] = 29000, ["C. Constellation"] = 27000,
     ["Chroma Alienbeam"] = 24000,
     -- Tier 2 (Chroma)
-    ["Chroma Sunrise"] = 13250, ["Chroma Raygun"] = 13250, 
-    ["Chroma Sunset"] = 9250, ["Chroma Blizzard"] = 7500, 
-    ["Chroma Snowcannon"] = 7750, ["Chroma Snowstorm"] = 4250, 
-    ["Chroma Heart Wand"] = 4250, ["Chroma Snow Dagger"] = 3500, 
-    ["Chroma Watergun"] = 3400, ["Chroma Treat"] = 2500, 
-    ["Chroma Sweet"] = 2250, ["Chroma Icecream"] = 2000, 
-    ["Chroma Sands"] = 1900, ["Chroma Beachy"] = 1800, 
+    ["Chroma Sunrise"] = 13250, ["Chroma Raygun"] = 13250,
+    ["Chroma Sunset"] = 9250, ["Chroma Blizzard"] = 7500,
+    ["Chroma Snowcannon"] = 7750, ["Chroma Snowstorm"] = 4250,
+    ["Chroma Heart Wand"] = 4250, ["Chroma Snow Dagger"] = 3500,
+    ["Chroma Watergun"] = 3400, ["Chroma Treat"] = 2500,
+    ["Chroma Sweet"] = 2250, ["Chroma Icecream"] = 2000,
+    ["Chroma Sands"] = 1900, ["Chroma Beachy"] = 1800,
     ["Chroma Ornament"] = 1800,
     -- Tier 1 (Chroma & Pets)
-    ["Chroma Darkbringer"] = 65, ["Chroma Lightbringer"] = 60, 
-    ["Chroma Luger"] = 50, ["Chroma Candleflame"] = 40, 
-    ["Chroma Laser"] = 40, ["Chroma Swirly Gun"] = 38, 
-    ["C. Elderwood Blade"] = 37, ["Chroma Deathshard"] = 35, 
-    ["Chroma Cookiecane"] = 32, ["Chroma Fang"] = 32, 
-    ["Chroma Gemstone"] = 32, ["Chroma Shark"] = 32, 
-    ["Chroma Slasher"] = 32, ["Chroma Heat"] = 28, 
-    ["Chroma Seer"] = 28, ["Chroma Gingerblade"] = 27, 
-    ["Chroma Tides"] = 27, ["Chroma Saw"] = 23, 
-    ["Chroma Boneblade"] = 22, ["Chroma Fire Bat"] = 3, 
-    ["Chroma Fire Bear"] = 3, ["Chroma Fire Bunny"] = 3, 
-    ["Chroma Fire Cat"] = 3, ["Chroma Fire Dog"] = 3, 
+    ["Chroma Darkbringer"] = 65, ["Chroma Lightbringer"] = 60,
+    ["Chroma Luger"] = 50, ["Chroma Candleflame"] = 40,
+    ["Chroma Laser"] = 40, ["Chroma Swirly Gun"] = 38,
+    ["C. Elderwood Blade"] = 37, ["Chroma Deathshard"] = 35,
+    ["Chroma Cookiecane"] = 32, ["Chroma Fang"] = 32,
+    ["Chroma Gemstone"] = 32, ["Chroma Shark"] = 32,
+    ["Chroma Slasher"] = 32, ["Chroma Heat"] = 28,
+    ["Chroma Seer"] = 28, ["Chroma Gingerblade"] = 27,
+    ["Chroma Tides"] = 27, ["Chroma Saw"] = 23,
+    ["Chroma Boneblade"] = 22, ["Chroma Fire Bat"] = 3,
+    ["Chroma Fire Bear"] = 3, ["Chroma Fire Bunny"] = 3,
+    ["Chroma Fire Cat"] = 3, ["Chroma Fire Dog"] = 3,
     ["Chroma Fire Fox"] = 3, ["Chroma Fire Pig"] = 3,
     -- Ancients / Misc
-    ["Gingerscope"] = 17750, ["Traveler's Axe"] = 8100, 
-    ["Celestial"] = 2450, ["Vampire's Axe"] = 1275, 
-    ["Harvester"] = 250, ["Icepiercer"] = 160, ["Icebreaker"] = 65, 
-    ["Batwing"] = 42, ["Elderwood Scythe"] = 38, 
-    ["Swirly Axe"] = 38, ["Hallowscythe"] = 30, 
+    ["Gingerscope"] = 17750, ["Traveler's Axe"] = 8100,
+    ["Celestial"] = 2450, ["Vampire's Axe"] = 1275,
+    ["Harvester"] = 250, ["Icepiercer"] = 160, ["Icebreaker"] = 65,
+    ["Batwing"] = 42, ["Elderwood Scythe"] = 38,
+    ["Swirly Axe"] = 38, ["Hallowscythe"] = 30,
     ["Logchopper"] = 18, ["Icewing"] = 13
 }
 
@@ -361,7 +370,9 @@ TopIsland.MouseButton1Click:Connect(function()
         })
         closeTween:Play()
         closeTween.Completed:Connect(function()
-            if not isMenuOpen then MainFrame.Visible = false end
+            if not isMenuOpen then
+                MainFrame.Visible = false
+            end
         end)
     end
 end)
@@ -369,6 +380,7 @@ end)
 ChatButton.MouseEnter:Connect(function()
     TweenService:Create(ChatButton, TweenInfo.new(0.2), {BackgroundTransparency = 0.6}):Play()
 end)
+
 ChatButton.MouseLeave:Connect(function()
     TweenService:Create(ChatButton, TweenInfo.new(0.2), {BackgroundTransparency = 0.8}):Play()
 end)
@@ -393,7 +405,9 @@ task.spawn(function()
                 Rotation = math.random(-360, 360)
             })
             tween:Play()
-            tween.Completed:Connect(function() flake:Destroy() end)
+            tween.Completed:Connect(function()
+                flake:Destroy()
+            end)
         end
     end
 end)
@@ -403,9 +417,9 @@ end)
 -- ==========================================
 local function formatNumber(n)
     local formatted = tostring(n)
-    while true do  
+    while true do
         local k
-        formatted, k = string.gsub(formatted, "^(-?%d+)(%d%d%d)", '%1,%2')
+        formatted, k = string.gsub(formatted, "^(-?%d+)(%d%d%d)", "%1,%2")
         if k == 0 then break end
     end
     return formatted
@@ -426,7 +440,9 @@ ChatButton.MouseButton1Click:Connect(function()
         local TextChatService = game:GetService("TextChatService")
         if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
             local channel = TextChatService.TextChannels:FindFirstChild("trading") or TextChatService.TextChannels:FindFirstChild("RBXGeneral")
-            if channel then channel:SendAsync(msg) end
+            if channel then
+                channel:SendAsync(msg)
+            end
         else
             game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg, "trading")
         end
@@ -438,7 +454,7 @@ local function getSlotFrame(element, tradeGui)
     while current and current.Parent do
         local p = current.Parent
         local pName = p.Name:lower()
-        if p == tradeGui or p:IsA("ScreenGui") or p:IsA("ScrollingFrame") or 
+        if p == tradeGui or p:IsA("ScreenGui") or p:IsA("ScrollingFrame") or
            pName:find("offer") or pName:find("container") or pName:find("slots") or pName == "tradegui" then
             return current
         end
@@ -460,7 +476,6 @@ local function getSlotValue(slotFrame)
 
             if child:IsA("TextLabel") then
                 local txt = child.Text
-
                 if txt:lower():find("chroma") then
                     isChroma = true
                 end
@@ -476,7 +491,6 @@ local function getSlotValue(slotFrame)
                 if mm2Values[txt] or mm2Values["Chroma " .. txt] or mm2Values["C. " .. txt] then
                     rawName = txt
                 end
-
             elseif child:IsA("ImageLabel") or child:IsA("ImageButton") then
                 if child.Image:lower():find("chroma") then
                     isChroma = true
