@@ -9,7 +9,7 @@ local LocalPlayer = Players.LocalPlayer
 -- СИСТЕМА ДОСТУПА (WHITELIST)
 -- ==========================================
 local allowedUsers = {
-    "TONA_TT228",          -- ← ЗАМЕНИ НА СВОЙ НИК (регистр не важен)
+    "TONA_TT228",     -- ←←← ЗАМЕНИ ЭТО НА СВОЙ НИК
     "Nikdruga"
 }
 
@@ -24,6 +24,10 @@ for _, username in ipairs(allowedUsers) do
 end
 
 if not hasAccess then
+    -- Показываем, какой ник реально у тебя (чтобы было видно в чём ошибка)
+    warn("Твой ник в игре: " .. LocalPlayer.Name)
+    warn("Он не найден в списке allowedUsers")
+
     if CoreGui:FindFirstChild("MM2NoAccess") then
         CoreGui.MM2NoAccess:Destroy()
     end
@@ -103,7 +107,7 @@ pcall(function()
 end)
 
 -- ==========================================
--- БАЗА ЦЕН (твои актуальные)
+-- БАЗА ЦЕН
 -- ==========================================
 local mm2Values = {
     -- Tier 4
@@ -395,7 +399,7 @@ task.spawn(function()
 end)
 
 -- ==========================================
--- ЛОГИКА РАСЧЁТА (из TradeGUI)
+-- ЛОГИКА РАСЧЁТА
 -- ==========================================
 local function formatNumber(n)
     local formatted = tostring(n)
