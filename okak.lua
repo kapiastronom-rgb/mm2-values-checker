@@ -9,7 +9,7 @@ local LocalPlayer = Players.LocalPlayer
 -- СИСТЕМА ДОСТУПА (WHITELIST)
 -- ==========================================
 local allowedUsers = {
-    "TONA_TT228",          -- замени на свой ник (регистр теперь не важен)
+    "Nik",          -- ← ЗАМЕНИ НА СВОЙ НИК (регистр не важен)
     "Nikdruga"
 }
 
@@ -81,8 +81,7 @@ if not hasAccess then
             flake.ZIndex = 0
             flake.Parent = bg
 
-            local tweenInfo = TweenInfo.new(math.random(5, 10), Enum.EasingStyle.Linear)
-            local tween = TweenService:Create(flake, tweenInfo, {
+            local tween = TweenService:Create(flake, TweenInfo.new(math.random(5, 10), Enum.EasingStyle.Linear), {
                 Position = UDim2.new(flake.Position.X.Scale, 0, 1.2, 0),
                 Rotation = math.random(-360, 360)
             })
@@ -94,7 +93,7 @@ if not hasAccess then
     return
 end
 
--- Приветствие при успешном входе
+-- Приветствие
 pcall(function()
     game:GetService("StarterGui"):SetCore("SendNotification", {
         Title = "✅ Доступ разрешен",
@@ -104,92 +103,92 @@ pcall(function()
 end)
 
 -- ==========================================
--- БАЗА ЦЕН SUPREME VALUES
+-- БАЗА ЦЕН (твои актуальные)
 -- ==========================================
 local mm2Values = {
     -- Tier 4
-    ["Traveler's Gun"] = 5600, ["Evergun"] = 3450, ["Constellation"] = 2700,
-    ["Evergreen"] = 2500, ["Turkey"] = 2450, ["Vampire's Gun"] = 1950,
-    ["Alienbeam"] = 1975, ["Darkshot"] = 1775, ["Darksword"] = 1750,
-    ["Raygun"] = 1750, ["Blossom"] = 1360, ["Sakura"] = 1350,
-    ["Sunrise"] = 1125, ["Snowcannon"] = 850, ["Bauble"] = 825,
-    ["Sunset"] = 625, ["Soul"] = 615, ["Spirit"] = 605,
-    ["Rainbow Gun"] = 420, ["Flora"] = 410, ["Rainbow"] = 410,
+    ["Traveler's Gun"] = 5600, ["Evergun"] = 3450, ["Constellation"] = 2700, 
+    ["Evergreen"] = 2500, ["Turkey"] = 2450, ["Vampire's Gun"] = 1950, 
+    ["Alienbeam"] = 1925, ["Darkshot"] = 1775, ["Darksword"] = 1750, 
+    ["Raygun"] = 1700, ["Blossom"] = 1360, ["Sakura"] = 1350, 
+    ["Sunrise"] = 1125, ["Snowcannon"] = 850, ["Bauble"] = 825, 
+    ["Sunset"] = 625, ["Soul"] = 615, ["Spirit"] = 605, 
+    ["Rainbow Gun"] = 420, ["Flora"] = 410, ["Rainbow"] = 410, 
     ["Bloom"] = 400,
     -- Tier 3
-    ["Heart Wand"] = 340, ["Ocean"] = 285, ["Waves"] = 280,
-    ["Xenoknife"] = 280, ["Xenoshot"] = 280, ["Flowerwood Gun"] = 265,
-    ["Blizzard"] = 260, ["Flowerwood"] = 260, ["Snowstorm"] = 260,
-    ["Snow Dagger"] = 250, ["Watergun"] = 250, ["Icecream"] = 135,
-    ["Treat"] = 155, ["Beachy"] = 145, ["Sands"] = 145,
-    ["Sweet"] = 150, ["Borealis"] = 145, ["Australis"] = 140,
-    ["Bat"] = 120, ["Pearlshine"] = 85, ["Pearl"] = 80,
+    ["Heart Wand"] = 340, ["Ocean"] = 285, ["Waves"] = 280, 
+    ["Xenoknife"] = 280, ["Xenoshot"] = 280, ["Flowerwood Gun"] = 265, 
+    ["Blizzard"] = 260, ["Flowerwood"] = 260, ["Snowstorm"] = 260, 
+    ["Snow Dagger"] = 250, ["Watergun"] = 250, ["Icecream"] = 160, 
+    ["Treat"] = 155, ["Beachy"] = 150, ["Sands"] = 150, 
+    ["Sweet"] = 150, ["Borealis"] = 145, ["Australis"] = 140, 
+    ["Bat"] = 120, ["Pearlshine"] = 85, ["Pearl"] = 80, 
     ["Candy"] = 80, ["Heartblade"] = 65,
     -- Tier 2
-    ["Luger"] = 40, ["Red Luger"] = 37, ["Phantom"] = 35,
-    ["Spectre"] = 35, ["Candleflame"] = 33, ["Darkbringer"] = 33,
-    ["Elderwood Blade"] = 33, ["Elderwood Revolver"] = 33,
-    ["Iceblaster"] = 33, ["Lightbringer"] = 33, ["Makeshift"] = 33,
-    ["Sugar"] = 32, ["Ornament"] = 32, ["Green Luger"] = 23,
-    ["Amerilaser"] = 22, ["Laser"] = 22, ["Hallowgun"] = 20,
+    ["Luger"] = 40, ["Red Luger"] = 37, ["Phantom"] = 35, 
+    ["Spectre"] = 35, ["Candleflame"] = 33, ["Darkbringer"] = 33, 
+    ["Elderwood Blade"] = 33, ["Elderwood Revolver"] = 33, 
+    ["Iceblaster"] = 33, ["Lightbringer"] = 33, ["Makeshift"] = 33, 
+    ["Sugar"] = 32, ["Ornament"] = 32, ["Green Luger"] = 23, 
+    ["Amerilaser"] = 22, ["Laser"] = 22, ["Hallowgun"] = 20, 
     ["Nightblade"] = 20, ["Shark"] = 20,
     -- Tier 1
-    ["Icebeam"] = 18, ["Plasmabeam"] = 18, ["Swirly Gun"] = 18,
-    ["Battleaxe II"] = 17, ["Blaster"] = 17, ["Ginger Luger"] = 17,
-    ["Pixel"] = 17, ["Gemstone"] = 15, ["Iceflake"] = 15,
-    ["Old Glory"] = 15, ["Plasmablade"] = 15, ["Slasher"] = 15,
-    ["Vampire's Edge"] = 15, ["Cookiecane"] = 13, ["Deathshard"] = 13,
-    ["Eternalcane"] = 13, ["Gingerblade"] = 13, ["Jinglegun"] = 13,
-    ["Lugercane"] = 13, ["Minty"] = 13, ["Nebula"] = 13,
-    ["Virtual"] = 13, ["Battleaxe"] = 12, ["Gingermint"] = 12,
-    ["Swirly Blade"] = 12, ["Chill"] = 10, ["Clockwork"] = 10,
-    ["Fang"] = 10, ["Frostsaber"] = 10, ["Heat"] = 10,
+    ["Icebeam"] = 18, ["Plasmabeam"] = 18, ["Swirly Gun"] = 18, 
+    ["Battleaxe II"] = 17, ["Blaster"] = 17, ["Ginger Luger"] = 17, 
+    ["Pixel"] = 17, ["Gemstone"] = 15, ["Iceflake"] = 15, 
+    ["Old Glory"] = 15, ["Plasmablade"] = 15, ["Slasher"] = 15, 
+    ["Vampire's Edge"] = 15, ["Cookiecane"] = 13, ["Deathshard"] = 13, 
+    ["Eternalcane"] = 13, ["Gingerblade"] = 13, ["Jinglegun"] = 13, 
+    ["Lugercane"] = 13, ["Minty"] = 13, ["Nebula"] = 13, 
+    ["Virtual"] = 13, ["Battleaxe"] = 12, ["Gingermint"] = 12, 
+    ["Swirly Blade"] = 12, ["Chill"] = 10, ["Clockwork"] = 10, 
+    ["Fang"] = 10, ["Frostsaber"] = 10, ["Heat"] = 10, 
     ["Spider"] = 10, ["Tides"] = 10,
     -- Tier 0
-    ["Bioblade"] = 8, ["Eternal III"] = 8, ["Eternal IV"] = 8,
-    ["Hallow's Blade"] = 8, ["Hallow's Edge"] = 8, ["Handsaw"] = 8,
-    ["Boneblade"] = 7, ["Eternal"] = 7, ["Eternal II"] = 7,
-    ["Frostbite"] = 7, ["Ghostblade"] = 7, ["Ice Dragon"] = 7,
-    ["Ice Shard"] = 7, ["Prismatic"] = 7, ["Pumpking"] = 7,
-    ["Saw"] = 7, ["Xmas"] = 7, ["Eggblade"] = 5, ["Flames"] = 5,
-    ["Snowflake"] = 5, ["Winter's Edge"] = 5, ["Peppermint"] = 4,
-    ["Cookieblade"] = 3, ["Blue Seer"] = 3, ["Purple Seer"] = 3,
-    ["Red Seer"] = 3, ["Seer"] = 3, ["Orange Seer"] = 2,
+    ["Bioblade"] = 8, ["Eternal III"] = 8, ["Eternal IV"] = 8, 
+    ["Hallow's Blade"] = 8, ["Hallow's Edge"] = 8, ["Handsaw"] = 8, 
+    ["Boneblade"] = 7, ["Eternal"] = 7, ["Eternal II"] = 7, 
+    ["Frostbite"] = 7, ["Ghostblade"] = 7, ["Ice Dragon"] = 7, 
+    ["Ice Shard"] = 7, ["Prismatic"] = 7, ["Pumpking"] = 7, 
+    ["Saw"] = 7, ["Xmas"] = 7, ["Eggblade"] = 5, ["Flames"] = 5, 
+    ["Snowflake"] = 5, ["Winter's Edge"] = 5, ["Peppermint"] = 4, 
+    ["Cookieblade"] = 3, ["Blue Seer"] = 3, ["Purple Seer"] = 3, 
+    ["Red Seer"] = 3, ["Seer"] = 3, ["Orange Seer"] = 2, 
     ["Yellow Seer"] = 2,
     -- Tier 3 (Chroma)
-    ["C. Traveler's Gun"] = 220000, ["Chroma Evergun"] = 75000,
-    ["Chroma Evergreen"] = 48000, ["Chroma Bauble"] = 34000,
-    ["C. Vampire's Gun"] = 29000, ["C. Constellation"] = 27000,
+    ["C. Traveler's Gun"] = 220000, ["Chroma Evergun"] = 75000, 
+    ["Chroma Evergreen"] = 48000, ["Chroma Bauble"] = 34000, 
+    ["C. Vampire's Gun"] = 29000, ["C. Constellation"] = 27000, 
     ["Chroma Alienbeam"] = 24000,
     -- Tier 2 (Chroma)
-    ["Chroma Raygun"] = 13500, ["Chroma Sunrise"] = 13250,
-    ["Chroma Sunset"] = 9250, ["Chroma Snowcannon"] = 7750,
-    ["Chroma Blizzard"] = 7250, ["Chroma Snowstorm"] = 4250,
-    ["Chroma Heart Wand"] = 4250, ["Chroma Snow Dagger"] = 3500,
-    ["Chroma Watergun"] = 3400, ["Chroma Treat"] = 2400,
-    ["Chroma Sweet"] = 2200, ["Chroma Icecream"] = 1900,
-    ["Chroma Sands"] = 1850, ["Chroma Beachy"] = 1750,
+    ["Chroma Sunrise"] = 13250, ["Chroma Raygun"] = 13250, 
+    ["Chroma Sunset"] = 9250, ["Chroma Blizzard"] = 7500, 
+    ["Chroma Snowcannon"] = 7750, ["Chroma Snowstorm"] = 4250, 
+    ["Chroma Heart Wand"] = 4250, ["Chroma Snow Dagger"] = 3500, 
+    ["Chroma Watergun"] = 3400, ["Chroma Treat"] = 2500, 
+    ["Chroma Sweet"] = 2250, ["Chroma Icecream"] = 2000, 
+    ["Chroma Sands"] = 1900, ["Chroma Beachy"] = 1800, 
     ["Chroma Ornament"] = 1800,
     -- Tier 1 (Chroma & Pets)
-    ["Chroma Darkbringer"] = 65, ["Chroma Lightbringer"] = 60,
-    ["Chroma Luger"] = 50, ["Chroma Candleflame"] = 40,
-    ["Chroma Laser"] = 40, ["Chroma Swirly Gun"] = 38,
-    ["C. Elderwood Blade"] = 37, ["Chroma Deathshard"] = 35,
-    ["Chroma Cookiecane"] = 32, ["Chroma Fang"] = 32,
-    ["Chroma Gemstone"] = 32, ["Chroma Shark"] = 32,
-    ["Chroma Slasher"] = 32, ["Chroma Heat"] = 28,
-    ["Chroma Seer"] = 28, ["Chroma Gingerblade"] = 27,
-    ["Chroma Tides"] = 27, ["Chroma Saw"] = 23,
-    ["Chroma Boneblade"] = 22, ["Chroma Fire Bat"] = 3,
-    ["Chroma Fire Bear"] = 3, ["Chroma Fire Bunny"] = 3,
-    ["Chroma Fire Cat"] = 3, ["Chroma Fire Dog"] = 3,
+    ["Chroma Darkbringer"] = 65, ["Chroma Lightbringer"] = 60, 
+    ["Chroma Luger"] = 50, ["Chroma Candleflame"] = 40, 
+    ["Chroma Laser"] = 40, ["Chroma Swirly Gun"] = 38, 
+    ["C. Elderwood Blade"] = 37, ["Chroma Deathshard"] = 35, 
+    ["Chroma Cookiecane"] = 32, ["Chroma Fang"] = 32, 
+    ["Chroma Gemstone"] = 32, ["Chroma Shark"] = 32, 
+    ["Chroma Slasher"] = 32, ["Chroma Heat"] = 28, 
+    ["Chroma Seer"] = 28, ["Chroma Gingerblade"] = 27, 
+    ["Chroma Tides"] = 27, ["Chroma Saw"] = 23, 
+    ["Chroma Boneblade"] = 22, ["Chroma Fire Bat"] = 3, 
+    ["Chroma Fire Bear"] = 3, ["Chroma Fire Bunny"] = 3, 
+    ["Chroma Fire Cat"] = 3, ["Chroma Fire Dog"] = 3, 
     ["Chroma Fire Fox"] = 3, ["Chroma Fire Pig"] = 3,
     -- Ancients / Misc
-    ["Gingerscope"] = 17750, ["Traveler's Axe"] = 8100,
-    ["Celestial"] = 2450, ["Vampire's Axe"] = 1300,
-    ["Harvester"] = 250, ["Icepiercer"] = 160, ["Icebreaker"] = 65,
-    ["Batwing"] = 42, ["Elderwood Scythe"] = 38,
-    ["Swirly Axe"] = 38, ["Hallowscythe"] = 30,
+    ["Gingerscope"] = 17750, ["Traveler's Axe"] = 8100, 
+    ["Celestial"] = 2450, ["Vampire's Axe"] = 1275, 
+    ["Harvester"] = 250, ["Icepiercer"] = 160, ["Icebreaker"] = 65, 
+    ["Batwing"] = 42, ["Elderwood Scythe"] = 38, 
+    ["Swirly Axe"] = 38, ["Hallowscythe"] = 30, 
     ["Logchopper"] = 18, ["Icewing"] = 13
 }
 
@@ -208,7 +207,7 @@ ScreenGui.ResetOnSpawn = false
 ScreenGui.Parent = CoreGui
 
 -- ==========================================
--- ВЕРХНЯЯ "ШТОРКА"
+-- ВЕРХНЯЯ ШТОРКА
 -- ==========================================
 local TopIsland = Instance.new("TextButton")
 TopIsland.Size = UDim2.new(0, 160, 0, 35)
@@ -347,22 +346,18 @@ TopIsland.MouseButton1Click:Connect(function()
         MainFrame.Visible = true
         MainFrame.Size = UDim2.new(0, 360, 0, 0)
         MainFrame.BackgroundTransparency = 1
-        local tweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
-        TweenService:Create(MainFrame, tweenInfo, {
+        TweenService:Create(MainFrame, TweenInfo.new(0.5, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {
             Size = UDim2.new(0, 360, 0, 260),
             BackgroundTransparency = 0.85
         }):Play()
     else
-        local tweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Quint, Enum.EasingDirection.In)
-        local closeTween = TweenService:Create(MainFrame, tweenInfo, {
+        local closeTween = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quint, Enum.EasingDirection.In), {
             Size = UDim2.new(0, 360, 0, 0),
             BackgroundTransparency = 1
         })
         closeTween:Play()
         closeTween.Completed:Connect(function()
-            if not isMenuOpen then
-                MainFrame.Visible = false
-            end
+            if not isMenuOpen then MainFrame.Visible = false end
         end)
     end
 end)
@@ -370,7 +365,6 @@ end)
 ChatButton.MouseEnter:Connect(function()
     TweenService:Create(ChatButton, TweenInfo.new(0.2), {BackgroundTransparency = 0.6}):Play()
 end)
-
 ChatButton.MouseLeave:Connect(function()
     TweenService:Create(ChatButton, TweenInfo.new(0.2), {BackgroundTransparency = 0.8}):Play()
 end)
@@ -390,127 +384,178 @@ task.spawn(function()
             flake.ZIndex = 1
             flake.Parent = MainFrame
 
-            local duration = math.random(4, 8)
-            local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
-            local tween = TweenService:Create(flake, tweenInfo, {
+            local tween = TweenService:Create(flake, TweenInfo.new(math.random(4, 8), Enum.EasingStyle.Linear), {
                 Position = UDim2.new(flake.Position.X.Scale, 0, 1.2, 0),
                 Rotation = math.random(-360, 360)
             })
             tween:Play()
-            tween.Completed:Connect(function()
-                flake:Destroy()
-            end)
+            tween.Completed:Connect(function() flake:Destroy() end)
         end
     end
 end)
 
 -- ==========================================
--- ЛОГИКА РАСЧЁТА
+-- ЛОГИКА РАСЧЁТА (из TradeGUI)
 -- ==========================================
 local function formatNumber(n)
-    if not n then return "0" end
-    return tostring(n):reverse():gsub("%d%d%d", "%1,"):reverse():gsub("^,", "")
+    local formatted = tostring(n)
+    while true do  
+        local k
+        formatted, k = string.gsub(formatted, "^(-?%d+)(%d%d%d)", '%1,%2')
+        if k == 0 then break end
+    end
+    return formatted
 end
 
-local function calculateTotal(playerName)
-    local player = Players:FindFirstChild(playerName)
-    if not player or not player:FindFirstChild("Data") 
-        or not player.Data:FindFirstChild("Inventory") 
-        or not player.Data.Inventory:FindFirstChild("Weapons") then
-        return 0
+local function isTrulyVisible(guiElement)
+    local current = guiElement
+    while current and current:IsA("GuiObject") do
+        if not current.Visible then return false end
+        current = current.Parent
     end
+    return true
+end
 
-    local total = 0
-    for _, item in ipairs(player.Data.Inventory.Weapons:GetChildren()) do
-        local itemName = item.Name
-        if mm2Values[itemName] then
-            if item:FindFirstChild("Count") and item.Count:IsA("IntValue") then
-                total = total + (mm2Values[itemName] * item.Count.Value)
-            else
-                total = total + mm2Values[itemName]
+ChatButton.MouseButton1Click:Connect(function()
+    local msg = string.format("Trade Value - Мой офер: %s | Их офер: %s", formatNumber(lastMyTotal), formatNumber(lastTheirTotal))
+    pcall(function()
+        local TextChatService = game:GetService("TextChatService")
+        if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
+            local channel = TextChatService.TextChannels:FindFirstChild("trading") or TextChatService.TextChannels:FindFirstChild("RBXGeneral")
+            if channel then channel:SendAsync(msg) end
+        else
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg, "trading")
+        end
+    end)
+end)
+
+local function getSlotFrame(element, tradeGui)
+    local current = element
+    while current and current.Parent do
+        local p = current.Parent
+        local pName = p.Name:lower()
+        if p == tradeGui or p:IsA("ScreenGui") or p:IsA("ScrollingFrame") or 
+           pName:find("offer") or pName:find("container") or pName:find("slots") or pName == "tradegui" then
+            return current
+        end
+        current = p
+    end
+    return element.Parent
+end
+
+local function getSlotValue(slotFrame)
+    local rawName = nil
+    local multiplier = 1
+    local isChroma = false
+
+    for _, child in ipairs(slotFrame:GetDescendants()) do
+        if child:IsA("GuiObject") and isTrulyVisible(child) then
+            if child.Name:lower():find("chroma") then
+                isChroma = true
+            end
+
+            if child:IsA("TextLabel") then
+                local txt = child.Text
+
+                if txt:lower():find("chroma") then
+                    isChroma = true
+                end
+
+                local count = string.match(txt, "[xX]%s*(%d+)") or string.match(txt, "(%d+)%s*[xX]")
+                if count then
+                    local num = tonumber(count)
+                    if num and num > multiplier then
+                        multiplier = num
+                    end
+                end
+
+                if mm2Values[txt] or mm2Values["Chroma " .. txt] or mm2Values["C. " .. txt] then
+                    rawName = txt
+                end
+
+            elseif child:IsA("ImageLabel") or child:IsA("ImageButton") then
+                if child.Image:lower():find("chroma") then
+                    isChroma = true
+                end
             end
         end
     end
-    return total
+
+    if rawName then
+        local valKey = rawName
+        if isChroma then
+            if mm2Values["Chroma " .. rawName] then
+                valKey = "Chroma " .. rawName
+            elseif mm2Values["C. " .. rawName] then
+                valKey = "C. " .. rawName
+            end
+        end
+        local baseValue = mm2Values[valKey] or mm2Values[rawName] or 0
+        return baseValue * multiplier
+    end
+    return 0
 end
 
-local function sendTradeMessage()
-    local myAmountText = formatNumber(lastMyTotal)
-    local theirAmountText = formatNumber(lastTheirTotal)
+local function calculateValues()
+    local myTotal = 0
+    local theirTotal = 0
+    local countedSlots = {}
 
-    local diff = lastMyTotal - lastTheirTotal
-    local status = ""
+    local playerGui = LocalPlayer:FindFirstChild("PlayerGui")
+    if not playerGui then return end
+
+    local tradeGui = playerGui:FindFirstChild("TradeGUI")
+    if tradeGui and tradeGui.Enabled then
+        local container = tradeGui:FindFirstChild("Container") or tradeGui
+        local guiCenterY = container.AbsolutePosition.Y + (container.AbsoluteSize.Y / 2)
+
+        if guiCenterY == 0 then
+            guiCenterY = workspace.CurrentCamera.ViewportSize.Y / 2
+        end
+
+        for _, element in ipairs(tradeGui:GetDescendants()) do
+            if element:IsA("TextLabel") and isTrulyVisible(element) then
+                if not element:FindFirstAncestorWhichIsA("ScrollingFrame") then
+                    local txt = element.Text
+                    if mm2Values[txt] or mm2Values["Chroma " .. txt] or mm2Values["C. " .. txt] then
+                        local slotFrame = getSlotFrame(element, tradeGui)
+                        if slotFrame and not countedSlots[slotFrame] then
+                            countedSlots[slotFrame] = true
+                            local slotVal = getSlotValue(slotFrame)
+
+                            if element.AbsolutePosition.Y < guiCenterY then
+                                myTotal = myTotal + slotVal
+                            else
+                                theirTotal = theirTotal + slotVal
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+    lastMyTotal = myTotal
+    lastTheirTotal = theirTotal
+
+    MyValueLabel.Text = "Моя сторона: " .. formatNumber(myTotal)
+    TheirValueLabel.Text = "Их сторона: " .. formatNumber(theirTotal)
+
+    local diff = theirTotal - myTotal
     if diff > 0 then
-        status = "В плюсе на: " .. formatNumber(diff)
+        DiffLabel.Text = "+" .. formatNumber(diff)
+        DiffLabel.TextColor3 = Color3.fromRGB(80, 255, 120)
     elseif diff < 0 then
-        status = "В минусе на: " .. formatNumber(math.abs(diff))
+        DiffLabel.Text = "-" .. formatNumber(math.abs(diff))
+        DiffLabel.TextColor3 = Color3.fromRGB(255, 80, 80)
     else
-        status = "Равный обмен"
-    end
-
-    local message = string.format("Мои: %s | Их: %s | Итог: %s (Supreme Values)", myAmountText, theirAmountText, status)
-
-    local tcs = game:GetService("TextChatService")
-    if tcs.ChatVersion == Enum.ChatVersion.TextChatService then
-        local channel = tcs.TextChannels:FindFirstChild("RBXGeneral") or tcs.TextChannels:FindFirstChild("RBXSystem")
-        if channel then
-            channel:SendAsync(message)
-        end
-    else
-        game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents"):WaitForChild("SayMessageRequest"):FireServer(message, "All")
+        DiffLabel.Text = "="
+        DiffLabel.TextColor3 = Color3.fromRGB(100, 200, 255)
     end
 end
 
-ChatButton.MouseButton1Click:Connect(sendTradeMessage)
-
-local function getTradingPartner()
-    local gui = LocalPlayer:FindFirstChild("PlayerGui")
-    if not gui then return nil end
-
-    local mainGUI = gui:FindFirstChild("MainGUI")
-    if mainGUI and mainGUI:FindFirstChild("Game") and mainGUI.Game:FindFirstChild("Trading") then
-        local targetName = mainGUI.Game.Trading.Player2.PlayerName.Text
-        if targetName and targetName ~= "Player" and targetName ~= "" then
-            return targetName
-        end
-    end
-    return nil
-end
-
--- Цикл обновления
-RunService.RenderStepped:Connect(function()
-    if isMenuOpen then
-        local myTotal = calculateTotal(LocalPlayer.Name)
-        local partnerName = getTradingPartner()
-        local theirTotal = 0
-
-        if partnerName then
-            theirTotal = calculateTotal(partnerName)
-            TheirValueLabel.Text = "Их сторона ("..partnerName.."): " .. formatNumber(theirTotal)
-        else
-            TheirValueLabel.Text = "Их сторона: Нет трейда"
-        end
-
-        MyValueLabel.Text = "Моя сторона: " .. formatNumber(myTotal)
-
-        lastMyTotal = myTotal
-        lastTheirTotal = theirTotal
-
-        if partnerName then
-            local diff = myTotal - theirTotal
-            if diff > 0 then
-                DiffLabel.Text = "Loss: -" .. formatNumber(diff)
-                DiffLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
-            elseif diff < 0 then
-                DiffLabel.Text = "Win: +" .. formatNumber(math.abs(diff))
-                DiffLabel.TextColor3 = Color3.fromRGB(100, 255, 100)
-            else
-                DiffLabel.Text = "Fair"
-                DiffLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
-            end
-        else
-            DiffLabel.Text = "="
-            DiffLabel.TextColor3 = Color3.fromRGB(100, 200, 255)
-        end
+task.spawn(function()
+    while task.wait(0.3) do
+        pcall(calculateValues)
     end
 end)
