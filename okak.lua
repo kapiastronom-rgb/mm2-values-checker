@@ -10,7 +10,7 @@ local LocalPlayer = Players.LocalPlayer
 -- ==========================================
 local allowedUsers = {
     "TONA_TT228", -- ОБЯЗАТЕЛЬНО ЗАМЕНИ НА СВОЙ НИК!
-    "НикДруга"
+    "Nikdruga"
 }
  
 local hasAccess = false
