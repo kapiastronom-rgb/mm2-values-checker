@@ -9,7 +9,7 @@ local LocalPlayer = Players.LocalPlayer
 -- СИСТЕМА ДОСТУПА (WHITELIST)
 -- ==========================================
 local allowedUsers = {
-    "Nik",          -- замени на свой ник (регистр теперь не важен)
+    "TONA_TT228",          -- замени на свой ник (регистр теперь не важен)
     "Nikdruga"
 }
 
