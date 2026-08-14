@@ -9,9 +9,8 @@ local LocalPlayer = Players.LocalPlayer
 -- СИСТЕМА ДОСТУПА (WHITELIST)
 -- ==========================================
 local allowedUsers = {
-    "ТвойРеальныйНик1", -- Замени на свой ник
-    "НикДруга",         -- Добавляй новых людей через запятую
-    "ЕщеОдинНик"
+    "ТвойРеальныйНик1", -- ОБЯЗАТЕЛЬНО ЗАМЕНИ НА СВОЙ НИК!
+    "НикДруга"
 }
  
 local hasAccess = false
@@ -23,15 +22,77 @@ for _, username in ipairs(allowedUsers) do
 end
  
 if not hasAccess then
-    -- Показываем ошибку и останавливаем скрипт
-    pcall(function()
-        game:GetService("StarterGui"):SetCore("SendNotification", {
-            Title = "❌ Доступ закрыт",
-            Text = "У вас нет разрешения на использование скрипта.",
-            Duration = 5
-        })
+    -- Удаляем старый блок, если он был
+    if CoreGui:FindFirstChild("MM2NoAccess") then
+        CoreGui.MM2NoAccess:Destroy()
+    end
+
+    -- Создаем зимний экран блокировки на весь экран
+    local blockGui = Instance.new("ScreenGui")
+    blockGui.Name = "MM2NoAccess"
+    blockGui.ResetOnSpawn = false
+    blockGui.Parent = CoreGui
+ 
+    local bg = Instance.new("Frame")
+    bg.Size = UDim2.new(1, 0, 1, 0)
+    bg.BackgroundColor3 = Color3.fromRGB(10, 15, 25)
+    bg.Active = true -- Блокирует клики по игре
+    bg.Parent = blockGui
+ 
+    local grad = Instance.new("UIGradient")
+    grad.Color = ColorSequence.new{
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(5, 10, 20)),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 45, 75))
+    }
+    grad.Rotation = 90
+    grad.Parent = bg
+ 
+    local title = Instance.new("TextLabel")
+    title.Size = UDim2.new(1, 0, 0, 80)
+    title.Position = UDim2.new(0, 0, 0.4, -40)
+    title.BackgroundTransparency = 1
+    title.Text = "❄ ДОСТУП ЗАКРЫТ ❄"
+    title.TextColor3 = Color3.fromRGB(200, 240, 255)
+    title.Font = Enum.Font.GothamBlack
+    title.TextSize = 45
+    title.Parent = bg
+ 
+    local sub = Instance.new("TextLabel")
+    sub.Size = UDim2.new(1, 0, 0, 40)
+    sub.Position = UDim2.new(0, 0, 0.4, 40)
+    sub.BackgroundTransparency = 1
+    sub.Text = "Твой аккаунт ("..LocalPlayer.Name..") не найден в базе."
+    sub.TextColor3 = Color3.fromRGB(150, 200, 230)
+    sub.Font = Enum.Font.GothamBold
+    sub.TextSize = 20
+    sub.Parent = bg
+    
+    -- Добавляем немного падающих снежинок для красоты
+    task.spawn(function()
+        while task.wait(0.1) do
+            local flake = Instance.new("TextLabel")
+            flake.Text = "❄"
+            flake.TextColor3 = Color3.fromRGB(255, 255, 255)
+            flake.TextTransparency = math.random(30, 80) / 100
+            flake.BackgroundTransparency = 1
+            local size = math.random(15, 30)
+            flake.TextSize = size
+            flake.Size = UDim2.new(0, size, 0, size)
+            flake.Position = UDim2.new(math.random(), 0, -0.1, 0)
+            flake.ZIndex = 0
+            flake.Parent = bg
+ 
+            local tweenInfo = TweenInfo.new(math.random(5, 10), Enum.EasingStyle.Linear)
+            local tween = TweenService:Create(flake, tweenInfo, {
+                Position = UDim2.new(flake.Position.X.Scale, 0, 1.2, 0),
+                Rotation = math.random(-360, 360)
+            })
+            tween:Play()
+            tween.Completed:Connect(function() flake:Destroy() end)
+        end
     end)
-    return -- Эта команда полностью обрывает загрузку скрипта дальше
+ 
+    return -- Полностью останавливаем загрузку остального скрипта
 end
  
 -- Приветствие при успешном входе
@@ -136,12 +197,12 @@ local mm2Values = {
 local lastMyTotal = 0
 local lastTheirTotal = 0
  
--- Удаляем старое GUI
+-- Удаляем старое GUI калькулятора
 if CoreGui:FindFirstChild("MM2WinterCalc") then
     CoreGui.MM2WinterCalc:Destroy()
 end
  
--- Основной ScreenGui
+-- Основной ScreenGui калькулятора
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "MM2WinterCalc"
 ScreenGui.ResetOnSpawn = false
@@ -433,7 +494,7 @@ RunService.RenderStepped:Connect(function()
         MyValueLabel.Text = "Моя сторона: " .. formatNumber(myTotal)
         
         lastMyTotal = myTotal
-        lastTheirTotal = theirTotal
+        lastTheirTotal = influenceTotal or theirTotal -- Защита на случай nil
  
         if partnerName then
             local diff = myTotal - theirTotal
