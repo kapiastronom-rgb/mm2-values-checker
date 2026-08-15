@@ -116,14 +116,14 @@ pcall(function()
 end)
 
 -- ==========================================
--- БАЗА ЦЕН
+-- БАЗА ЦЕН (ОБНОВЛЕНА)
 -- ==========================================
 local mm2Values = {
     -- Tier 4
     ["Traveler's Gun"] = 5600, ["Evergun"] = 3450, ["Constellation"] = 2700,
     ["Evergreen"] = 2500, ["Turkey"] = 2450, ["Vampire's Gun"] = 1950,
-    ["Alienbeam"] = 1925, ["Darkshot"] = 1775, ["Darksword"] = 1750,
-    ["Raygun"] = 1700, ["Blossom"] = 1360, ["Sakura"] = 1350,
+    ["Alienbeam"] = 1975, ["Darkshot"] = 1775, ["Darksword"] = 1750,
+    ["Raygun"] = 1750, ["Blossom"] = 1360, ["Sakura"] = 1350,
     ["Sunrise"] = 1125, ["Snowcannon"] = 850, ["Bauble"] = 825,
     ["Sunset"] = 625, ["Soul"] = 615, ["Spirit"] = 605,
     ["Rainbow Gun"] = 420, ["Flora"] = 410, ["Rainbow"] = 410,
@@ -132,7 +132,7 @@ local mm2Values = {
     ["Heart Wand"] = 340, ["Ocean"] = 285, ["Waves"] = 280,
     ["Xenoknife"] = 280, ["Xenoshot"] = 280, ["Flowerwood Gun"] = 265,
     ["Blizzard"] = 260, ["Flowerwood"] = 260, ["Snowstorm"] = 260,
-    ["Snow Dagger"] = 250, ["Watergun"] = 250, ["Icecream"] = 160,
+    ["Snow Dagger"] = 250, ["Watergun"] = 250, ["Icecream"] = 135,
     ["Treat"] = 155, ["Beachy"] = 150, ["Sands"] = 150,
     ["Sweet"] = 150, ["Borealis"] = 145, ["Australis"] = 140,
     ["Bat"] = 120, ["Pearlshine"] = 85, ["Pearl"] = 80,
@@ -174,13 +174,13 @@ local mm2Values = {
     ["C. Vampire's Gun"] = 29000, ["C. Constellation"] = 27000,
     ["Chroma Alienbeam"] = 24000,
     -- Tier 2 (Chroma)
-    ["Chroma Sunrise"] = 13250, ["Chroma Raygun"] = 13250,
-    ["Chroma Sunset"] = 9250, ["Chroma Blizzard"] = 7500,
+    ["Chroma Sunrise"] = 13250, ["Chroma Raygun"] = 13500,
+    ["Chroma Sunset"] = 9250, ["Chroma Blizzard"] = 7250,
     ["Chroma Snowcannon"] = 7750, ["Chroma Snowstorm"] = 4250,
     ["Chroma Heart Wand"] = 4250, ["Chroma Snow Dagger"] = 3500,
-    ["Chroma Watergun"] = 3400, ["Chroma Treat"] = 2500,
-    ["Chroma Sweet"] = 2250, ["Chroma Icecream"] = 2000,
-    ["Chroma Sands"] = 1900, ["Chroma Beachy"] = 1800,
+    ["Chroma Watergun"] = 3400, ["Chroma Treat"] = 2400,
+    ["Chroma Sweet"] = 2200, ["Chroma Icecream"] = 1900,
+    ["Chroma Sands"] = 1850, ["Chroma Beachy"] = 1750,
     ["Chroma Ornament"] = 1800,
     -- Tier 1 (Chroma & Pets)
     ["Chroma Darkbringer"] = 65, ["Chroma Lightbringer"] = 60,
@@ -198,7 +198,7 @@ local mm2Values = {
     ["Chroma Fire Fox"] = 3, ["Chroma Fire Pig"] = 3,
     -- Ancients / Misc
     ["Gingerscope"] = 17750, ["Traveler's Axe"] = 8100,
-    ["Celestial"] = 2450, ["Vampire's Axe"] = 1275,
+    ["Celestial"] = 2450, ["Vampire's Axe"] = 1300,
     ["Harvester"] = 250, ["Icepiercer"] = 160, ["Icebreaker"] = 65,
     ["Batwing"] = 42, ["Elderwood Scythe"] = 38,
     ["Swirly Axe"] = 38, ["Hallowscythe"] = 30,
