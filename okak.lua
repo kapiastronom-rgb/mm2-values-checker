@@ -9,7 +9,8 @@ local LocalPlayer = Players.LocalPlayer
 -- ==========================================
 local allowedUsers = {
     "TONA_TT228", -- твой ник
-    "pasha46211", -- ник Паши (можешь добавить ещё)
+    "pasha46211",
+    "iilia1234",
 }
 local function isAllowed(player)
     local nameLower = string.lower(player.Name)
